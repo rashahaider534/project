@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('phone')->unique();
             $table->string('password');
-            $table->string('Firstname')->nullable(); 
-            $table->string('Lastname')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('role')->default('user');
-            $table->string('location')->nullable();   
-            $table->timestamp('phone_verified_at')->nullable();           
+            $table->string('location')->nullable();
+            $table->text('image');
+            $table->timestamp('phone_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
