@@ -4,33 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
-    public function index(Product $storeIndex)
+    public function index($store_id)
     {
+        $data=Product::where('store_id',$store_id)->get();
         return response()->json([
             'Status' => 200,
             'Message' => 'the request has been received',
-            'data'=> $storeIndex
+            'data'=> $data,
         ]);
     }
     public function store(Request $request,$storeIndex){
         $validateData= $request->validate([
-            'name'=> 'required',
-            'quantity'=>'required',
-            'describtion'=>'required'
+            'name'=> 'nullable',
+            'quantity'=>'nullable',
+            'describtion'=>'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+
         ]);
-        $product =  Product::create([
-            'name' => $validateData['name'],
-            'quantity'=> $validateData['quantity'],
-            'describtion'=> $validateData['describtion'],
-            'store_id' => $storeIndex,
-        ]);
+        if($request->hasFile('image'))
+        {
+            $filName=$request->file('image')->getClientOriginalName();
+            $filePath = $request->file('image')->storeAs('public/images/products',$filName);
+        }
+        $product = new Product ;
+        $product->name=$validateData['name'];
+        $product->quantity=$validateData['quantity'];
+        $product->description=$validateData['describtion'];
+        $product->store_id=$storeIndex;
+        $product->image=$filePath;
+        $product->save();
         return response()->json([
             'Status' => 200,
             'Message' => 'Product registered successfuly',
-            'data' => $product
+            'data' =>$product->id
         ]);
     }
 }

@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('userInformation',[UserController::class,'update'] ); //لإدخال بيانات المستخدم
 
+Route::get('userInformation/{user_id}',[UserController::class,'index'] ); // لارجاع بيانات المستخدم
+
 Route::get('stores',[StoreController::class,'index'] );  // لعرض المتاجر
 
 Route::post('stores',[StoreController::class,'store'] );  // لتخزين متجر

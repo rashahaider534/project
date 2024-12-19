@@ -18,12 +18,14 @@ class StoreController extends Controller
 
     public function store(Request $request){
         $validateData =$request->validate([
-            'name' => 'required',
-            'location' => 'required'
+            'name' => 'nullable',
+            'location' => 'nullable',
+            'phone' => 'nullable',
         ]);
         $store =  Store::create([
             'name' => $validateData['name'],
-            'location' => $validateData['location']
+            'location' => $validateData['location'],
+            'phone' => $validateData['phone'],
         ]);
         return response()->json([
             'Status' => 200,
