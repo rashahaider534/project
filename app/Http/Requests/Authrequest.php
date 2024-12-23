@@ -22,8 +22,27 @@ class Authrequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone'=>'required|unique:users,phone|min:10|max:10',
-            'password'=>'required |min:8|confirmed'
+            //'phone'=>'required|unique:users,phone|min:10|max:10',
+            //'password'=>'required |min:8|confirmed'
+            'phone' => [
+                'required',
+                'unique:users,phone',
+                
+                'string',
+                'min:12',
+                'max:12',
+                //'regex:/^\+9639\d{8}$/',  // التحقق من الرقم حسب النمط
+            ],
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                'min:8',  // كلمة المرور يجب أن تكون على الأقل 8 محارف
+                'regex:/[a-z]/',  // يجب أن تحتوي على حرف صغير
+                'regex:/[A-Z]/',  // يجب أن تحتوي على حرف كبير
+                'regex:/[0-9]/',  // يجب أن تحتوي على رقم
+                'regex:/[!@#$%^&*(),.?":{}|<>]/',  // يجب أن تحتوي على رمز خاص
+            ],
         ];
     }
 
