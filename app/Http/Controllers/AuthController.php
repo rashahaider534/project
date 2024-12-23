@@ -37,20 +37,20 @@ class AuthController extends Controller
         //     return response()->json(['error' => 'Unauthorized'], 401);
         // }
         // return $this->respondWithToken($token);
-        
+
     }
 
     public function login(array $careden=null)
     {
         $credentials = request(['phone', 'password']);
-        
+
         $attempt=!empty($careden)?$careden:$credentials;
         if (! $token = auth()->attempt($attempt)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
       //  return $this->respondWithToken($token);
-      return response_data($this->respondWithToken($token),'login Successful');
+    return response_data($this->respondWithToken($token),'login Successful');
     }
 
     /**
@@ -61,10 +61,10 @@ class AuthController extends Controller
     public function me()
     {
        // return response()->json(auth()->user());
-       $user=auth()->user()->only('phone','password');
-       return response_data($user);
+    $user=auth()->user()->only('phone','password');
+    return response_data($user);
     }
-    
+
 
     /**
      * Log the user out (Invalidate the token).
@@ -76,7 +76,7 @@ class AuthController extends Controller
         auth()->logout();
 
        // return response()->json(['message' => 'Successfully logged out']);
-       return response_data([],'Successfully logged out');
+    return response_data([],'Successfully logged out');
     }
 
     /**
@@ -87,7 +87,7 @@ class AuthController extends Controller
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
-    
+
 
     }
 

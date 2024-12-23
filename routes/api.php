@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,10 +20,29 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('userInformation/{user_id}',[UserController::class,'update'] ); //لإدخال بيانات المستخدم
+
+Route::get('userInformation/{user_id}',[UserController::class,'index'] ); // لارجاع بيانات المستخدم
+
+Route::get('stores',[StoreController::class,'index'] );  // لعرض المتاجر
+
+Route::post('stores',[StoreController::class,'store'] );  // لتخزين متجر
+
+Route::delete('stores/{store_id}',[StoreController::class,'destory'] ); // لحذف متجر
+
+Route::put('stores/{store_id}',[StoreController::class,'update'] ); // للتعديل على بيانات متجر
+
+Route::get('product/{store_id}',[ProductController::class,'index']); //لعرض منتجات متجر
+
+Route::post('product/{store_id}',[ProductController::class,'store']);//لتخزين منتج
 
 Route::post('register', [AuthController::class,'register']);
+
 Route::post('login', [AuthController::class,'login']);
+
 Route::post('logout', [AuthController::class,'logout']);
+
 Route::post('me', [AuthController::class,'me']);
+
 Route::post('refresh', [AuthController::class,'refresh']);
 
