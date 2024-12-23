@@ -22,17 +22,24 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['Status' => 404, 'Message' => 'User not found']);
         }
-
+        $filePath=null;
         if ($request->hasFile('image')) {
             $fileName = $request->file('image')->getClientOriginalName();
             $filePath = $request->file('image')->storeAs('public/images/users', $fileName);
-            $user->image = $filePath;
         }
 
+        if ($filePath) {
+            $user->image = $filePath;
+            $user->URL_image = url($filePath);
+        } else {
+            $user->image = null;
+            $user->URL_image = null;
+        }
         $user->update([
             $user->first_name=$request->firt_name,
             $user->last_name=$request->last_name,
             $user->location=$request->location,
+
         ]);
 
         return response()->json([
@@ -43,9 +50,7 @@ class UserController extends Controller
         }
     public function index(User $user_id)
     {
-      //  if ($user_id->image && Storage::exists($user_id->image)) {
-            //$image= response()->download(storage_path('app/' . $user_id->image));
-        //}
+
         return response()->json([
             'Status' => 200,
             'Message' => 'User registered successfuly',
@@ -54,6 +59,7 @@ class UserController extends Controller
                 'last_name'=>$user_id->last_name,
                 'location'=>$user_id->location,
                 'phone'=>$user_id->phone,
+                'phone'=>$user_id->URL_image,
             ]
         ]) ;
     }
