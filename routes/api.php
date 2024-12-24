@@ -20,7 +20,7 @@ use App\Http\Controllers\ProductController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('userInformation',[UserController::class,'update'] ); //لإدخال بيانات المستخدم
+Route::post('userInformation/{user_id}',[UserController::class,'update'] ); //لإدخال بيانات المستخدم
 
 Route::get('userInformation/{user_id}',[UserController::class,'index'] ); // لارجاع بيانات المستخدم
 
@@ -28,13 +28,13 @@ Route::get('stores',[StoreController::class,'index'] );  // لعرض المتا�
 
 Route::post('stores',[StoreController::class,'store'] );  // لتخزين متجر
 
-Route::delete('stores/{store_id}',[StoreController::class,'destory'] ); // لحزف متجر
+Route::delete('stores/{store_id}',[StoreController::class,'destory'] ); // لحذف متجر
 
 Route::put('stores/{store_id}',[StoreController::class,'update'] ); // للتعديل على بيانات متجر
 
-Route::get('product/{storeIndex}',[ProductController::class,'index']); //لعرض منتجات متجر
+Route::get('product/{store_id}',[ProductController::class,'index']); //لعرض منتجات متجر
 
-Route::post('product/{storeIndex}',[ProductController::class,'store']);//لتخزين منتج
+Route::post('product/{store_id}',[ProductController::class,'store']);//لتخزين منتج
 
 Route::post('register', [AuthController::class,'register']);
 
