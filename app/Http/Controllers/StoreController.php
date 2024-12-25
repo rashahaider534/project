@@ -29,11 +29,12 @@ class StoreController extends Controller
         {
             $filName=$request->file('image')->getClientOriginalName();
             $filePath = $request->file('image')->storeAs('public/images/Stores',$filName);
+            $fileUrl = Storage::url($filePath);
         }
         $store= new Store();
         if ($filePath) {
             $store->image = $filePath;
-            $store->URL_image = url($filePath);
+            $store->URL_image = $fileUrl;
         } else {
             $store->image = null;
             $store->URL_image = null;

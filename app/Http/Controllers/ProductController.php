@@ -32,6 +32,7 @@ class ProductController extends Controller
         {
             $filName=$request->file('image')->getClientOriginalName();
             $filePath = $request->file('image')->storeAs('public/images/products',$filName);
+            $fileUrl = Storage::url($filePath);
         }
         $product = new Product ;
         $product->name=$validateData['name'];
@@ -40,7 +41,7 @@ class ProductController extends Controller
         $product->store_id=$storeIndex;
         if ($filePath) {
             $product->image =$filePath;
-            $product->URL_image = url($filePath);
+            $product->URL_image = $fileUrl;
         } else {
             $product->image = null;
             $product->URL_image = null;
