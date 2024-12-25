@@ -20,9 +20,9 @@ use App\Http\Controllers\ProductController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('userInformation/{user_id}',[UserController::class,'update'] ); //لإدخال بيانات المستخدم
+Route::middleware('auth:api')->post('/update-profile', [AuthController::class, 'updateProfile']);
+ //لإدخال بيانات المستخدم
 
-Route::get('userInformation/{user_id}',[UserController::class,'index'] ); // لارجاع بيانات المستخدم
 
 Route::get('stores',[StoreController::class,'index'] );  // لعرض المتاجر
 
