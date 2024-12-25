@@ -21,12 +21,25 @@ class StoreController extends Controller
             'name' => 'nullable',
             'location' => 'nullable',
             'phone' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
-        $store =  Store::create([
-            'name' => $validateData['name'],
-            'location' => $validateData['location'],
-            'phone' => $validateData['phone'],
-        ]);
+        $filePath=null;
+        if($request->hasFile('image'))
+        {
+            $filName=$request->file('image')->getClientOriginalName();
+            $filePath = $request->file('image')->storeAs('public/images/products',$filName);
+        }
+        $store= new Store;
+        if ($filePath) {
+            $store->image = $filePath;
+            $store->URL_image = url($filePath);
+        } else {
+            $store->image = null;
+            $store->URL_image = null;
+        }
+        $store->name=$validateData['name'];
+        $store->location=$validateData['location'];
+        $store->phone=$validateData['phone'];
         return response()->json([
             'Status' => 200,
             'Message' => 'Store registered successfuly',
