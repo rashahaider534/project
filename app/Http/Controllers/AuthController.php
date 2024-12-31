@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use DragonCode\Contracts\Cashier\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 class AuthController extends Controller
 {
     /**
@@ -46,7 +47,7 @@ class AuthController extends Controller
     {
         $credentials = request(['phone', 'password']);
         $attempt=!empty($careden)?$careden:$credentials;
-        if (! $token = auth()->attempt($attempt)) 
+        if (! $token = auth()->attempt($attempt))
         {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -56,28 +57,29 @@ class AuthController extends Controller
 
     public function updateProfile(UserRequest $request)
     {
-       
+
         $data = $request->validated();
           if (!auth()->check())// التحقق من أن المستخدم مسجل الدخول
          {
          return response()->json(['error' => 'Unauthorized'], 401);
          }
-         $user = auth()->user();// الحصول على المستخدم الحالي    
+         $user = auth()->user();// الحصول على المستخدم الحالي
         // تحديث البيانات الأساسية مثل الاسم والموقع
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->location = $request->location;      
+        $user->location = $request->location;
         // إذا تم إرسال صورة، نقوم بتخزينها وتحديث مسارها في قاعدة البيانات
         if ($request->hasFile('image')) {
             $fileName = $request->file('image')->getClientOriginalName();
             $filePath = $request->file('image')->storeAs('public/images/users', $fileName);
+            $user->URL_image = Storage::url($filePath);
             $user->image = $filePath;
-           
+
         }
         $user->save();
         return response()->json([
             'Status' => 200,
-            'Message' => 'User profile updated successfully',           
+            'Message' => 'User profile updated successfully',
         ]);
     }
     /**
@@ -87,7 +89,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-       
+
     $user=auth()->user();
     return response_data($user);
 
@@ -135,7 +137,7 @@ class AuthController extends Controller
         ]);
     }
 
-  
-   
+
+
 }
 ?>
