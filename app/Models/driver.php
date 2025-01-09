@@ -2,22 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable implements JWTSubject
+class driver extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use HasFactory;
     protected $fillable = [
         'name',
         'phone',
@@ -61,17 +51,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-    public function order()
+    public function user()
     {
-        return $this->hasMany(Order::class);
-    }
-    public function drevier()
-    {
-        return $this->hasOne(driver::class);
-    }
-    public function cart()
-    {
-        return $this->hasOne(Cart_items::class);
+        return $this->belongsTo(User::class);
     }
 }

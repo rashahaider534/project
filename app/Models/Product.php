@@ -15,4 +15,14 @@ class Product extends Model
         'image',
         'store_id',
     ];
+
+    public function order_items()
+    {
+        return $this->hasMany(Order::class);
+    }
+    public function cart_items()
+    {
+        return $this->belongsToMany(Cart_items::class, 'cart_item_product', 'product_id', 'cart_item_id')
+        ->withPivot('quantity'); 
+    }
 }

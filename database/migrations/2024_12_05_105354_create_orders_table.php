@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('total_price');
+            $table->decimal('total_price');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreign('user_id')->references('id')
+                                      ->on('users')
+                                      ->onDelete('cascade')
+                                      ->onUpdate('cascade');
+
+            $table->enum('status',['In preparation','Prepared','shipped','delivered','cancelled'])->default('In preparation');
+           // $table->unsignedBigInteger('driver_id');
+            $table->timestamps(); 
         });
     }
 

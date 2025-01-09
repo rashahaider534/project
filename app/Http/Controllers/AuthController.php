@@ -67,7 +67,7 @@ class AuthController extends Controller
         // تحديث البيانات الأساسية مثل الاسم والموقع
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->location = $request->location;
+        $user->location = $request->location;     
         // إذا تم إرسال صورة، نقوم بتخزينها وتحديث مسارها في قاعدة البيانات
         if ($request->hasFile('image')) {
             $fileName = $request->file('image')->getClientOriginalName();
