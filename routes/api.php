@@ -48,7 +48,9 @@ Route::post('refresh', [AuthController::class,'refresh']);
 //order
 Route::get('orders', [OrderController::class, 'index']);//عرض الطلبات
 
-Route::middleware('auth:api')->post('order/createOrder',[OrderController ::class, 'createOrder']);//انشاء طلب
+Route::post('orders/getProductsFromOrder', [OrderController::class, 'getProductsFromOrder']);//عرض المنتجات في الطلب
+
+Route::middleware('auth:api')->get('orders/createOrder',[OrderController ::class, 'createOrder']);//انشاء طلب
 
 Route::post('orders/cancel',[OrderController::class,'cancel']);//الغاء طلب
 //cart
