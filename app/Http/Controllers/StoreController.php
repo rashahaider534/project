@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use Illuminate\Support\Facades\Storage;
 class StoreController extends Controller
 {
     public function index(){
@@ -27,12 +28,13 @@ class StoreController extends Controller
         if($request->hasFile('image'))
         {
             $filName=$request->file('image')->getClientOriginalName();
-            $filePath = $request->file('image')->storeAs('public/images/products',$filName);
+            $filePath = $request->file('image')->storeAs('public/images/Stores',$filName);
+            $fileUrl = Storage::url($filePath);
         }
-        $store= new Store;
+        $store= new Store();
         if ($filePath) {
             $store->image = $filePath;
-            $store->URL_image = url($filePath);
+            $store->URL_image = $fileUrl;
         } else {
             $store->image = null;
             $store->URL_image = null;
@@ -40,6 +42,7 @@ class StoreController extends Controller
         $store->name=$validateData['name'];
         $store->location=$validateData['location'];
         $store->phone=$validateData['phone'];
+        $store->save();
         return response()->json([
             'Status' => 200,
             'Message' => 'Store registered successfuly',
