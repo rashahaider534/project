@@ -20,7 +20,7 @@ return new class extends Migration
                                          ->onDelete('cascade')
                                          ->onUpdate('cascade');
             $table->unsignedBigInteger('order_id');
-            $table->decimal('price')->default(0);//سعر المنتج وقت الطلب
+            $table->decimal('price')->nullable();//سعر المنتج وقت الطلب
             $table->foreign('order_id')->references('id')
                                          ->on('orders')
                                          ->onDelete('cascade')
