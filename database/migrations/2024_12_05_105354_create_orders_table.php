@@ -20,8 +20,13 @@ return new class extends Migration
                                       ->onDelete('cascade')
                                       ->onUpdate('cascade');
 
+            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->foreign('driver_id')->references('id')
+                                      ->on('users')
+                                      ->onDelete('cascade')
+                                      ->onUpdate('cascade');
             $table->enum('status',['In preparation','Prepared','shipped','delivered','cancelled'])->default('In preparation');
-           // $table->unsignedBigInteger('driver_id');
+           
             $table->timestamps(); 
         });
     }

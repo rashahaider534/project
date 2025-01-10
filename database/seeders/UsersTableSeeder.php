@@ -15,8 +15,31 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'phone' => '+96391234567',
-            'password' => Hash::make('password123'),
+            [
+                'phone' => '+96391111111',
+                'password' => Hash::make('password123'),
+                'role'=>'driver'
+            ],
+            [
+                'phone' => '+96392222222',
+                'password' => Hash::make('driver2024'),
+                'role'=>'driver'
+            ],
+            [
+                'phone' => '+96393333333',
+                'password' => Hash::make('secure1234'),
+                'role'=>'driver'
+            ],
+            [
+                'phone' => '+96394444444',
+                'password' => Hash::make('passkey456'),
+                'role'=>'driver'
+            ],
+            [
+                'phone' => '+96395555555',
+                'password' => Hash::make('welcome789'),
+                'role'=>'driver'
+            ],
         ]);
     }
 }
