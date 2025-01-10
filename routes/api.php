@@ -8,6 +8,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -61,3 +62,9 @@ Route::middleware('auth:api')->get('cart/get',[CartController::class, 'getCart']
 Route::middleware('auth:api')->post('cart/removeproduct',[CartController::class, 'removeProductFromCart']);//ازالة المنتج من السلة
 
 Route::middleware('auth:api')->post('cart/updatecart',[CartController::class, 'updatecart']);//تعديل الكمية للمنتج داخل السلة
+
+Route::get('ProductsSearch',[SearchController::class,'productSearch'] );  // للبحث عن متجر
+
+Route::get('StoresSearch',[SearchController::class,'storeSearch'] );  // للبحث عن متجر
+
+Route::get('ProductDetails/{product_id}',[ProductController::class,'productDetails'] );  // للبحث عن متجر
