@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use App\Models\Cart_items;
 use App\Models\Order_items;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth;
 
 class OrderController extends Controller
 {//عرض الطلبات
@@ -114,5 +116,36 @@ class OrderController extends Controller
         }
 
         return response()->json(['cant cancel'], 401);
+    }
+
+    public function updatestatus(Request $request){
+        $orderId = $request->order_id;
+        $driverId = $request->driver_id;
+        $order=Order::findOrFail($orderId);
+        $drivers = User::where('role', 'driver')->take(5)->pluck('id');
+        if (!in_array($driverId, $drivers->toArray())) {
+            return response()->json(['error' => 'The driver is not one of the first 5 drivers.'], 400);
+        }
+        if ($order->driver_id && $order->driver_id != $driverId) {
+            return response()->json(['error' => 'This order is already assigned to another driver.'], 400);
+        }
+    
+        // إذا لم يكن قد تم تعيين سائق بعد، نقوم بتعيين السائق الحالي
+        if (!$order->driver_id) {
+            $order->driver_id = $driverId;
+        }
+         if($order->status !='cancelled')
+         {
+            $order->driver_id = $driverId;
+            $order->status=$request->status;
+            $order->save();
+            return response()->json(['message' => 'Order status updated successfully.']);
+         }
+        if($order->status =='cancelled')
+        {
+            return response()->json(['message' => 'Order cancelled cant update status '],400);
+        }
+        
+      
     }
 }

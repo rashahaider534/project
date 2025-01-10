@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('role')->default('user');
+            $table->enum('role', ['user', 'driver']);
             $table->string('location')->nullable();
             $table->text('image')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
