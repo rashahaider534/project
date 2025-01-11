@@ -52,6 +52,8 @@ Route::post('orders/getProductsFromOrder', [OrderController::class, 'getProducts
 
 Route::middleware('auth:api')->get('orders/createOrder',[OrderController ::class, 'createOrder']);//انشاء طلب
 
+Route::post('orders/updatestatus',[OrderController ::class, 'updatestatus']);
+
 Route::post('orders/cancel',[OrderController::class,'cancel']);//الغاء طلب
 //cart
 Route::middleware('auth:api')->post('cart/add', [CartController::class, 'addtocart']);//الاضافة الى السلة

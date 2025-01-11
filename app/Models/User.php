@@ -64,11 +64,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function order()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class,'user_id');
     }
-    public function drevier()
+    public function orders()
     {
-        return $this->hasOne(driver::class);
+        return $this->hasMany(Order::class, 'driver_id');
     }
     public function cart()
     {
