@@ -53,4 +53,21 @@ class ProductController extends Controller
             'product_id' =>$product->id
         ]);
     }
+    public function productDetails(Product $product_id)
+    {
+        if($product_id)
+        {
+            return response()->json([
+                'Status' => 200,
+                'data'=> $product_id,
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'Status' => 404,
+                'Message'=>'not found' ,
+            ]);
+        }
+    }
 }
