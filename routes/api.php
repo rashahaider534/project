@@ -69,4 +69,4 @@ Route::get('ProductsSearch',[SearchController::class,'productSearch'] );  // ل�
 
 Route::get('StoresSearch',[SearchController::class,'storeSearch'] );  // للبحث عن متجر
 
-Route::get('ProductDetails/{product_id}',[ProductController::class,'productDetails'] );  // لعرض تفاصيل متجر
+Route::get('ProductDetails/{product_id}',[ProductController::class,'productDetails'] );  //لعرض تفاصيل منتج
