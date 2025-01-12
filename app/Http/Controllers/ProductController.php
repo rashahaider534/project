@@ -24,6 +24,7 @@ class ProductController extends Controller
             'name'=> 'nullable',
             'quantity'=>'nullable',
             'describtion'=>'nullable',
+            'price' =>'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
 
         ]);
