@@ -52,6 +52,7 @@ class OrderController extends Controller
                 // إضافة بيانات المنتج إلى orderItemsData
                 $orderItemsData[] = [
                     'product_id' => $product->id,
+                    'product_name' => $product->name,
                     'quantity' => $product->pivot->quantity,
                     'price' => $productTotalPrice, // حفظ السعر في order_items
                 ];
@@ -86,7 +87,15 @@ class OrderController extends Controller
         $orderId = $request->order_id;
         $order = Order::findorFail($orderId);
         $orderItems = Order_items::where('order_id', $orderId)->get();
-        return response()->json($orderItems);
+        $result = $orderItems->map(function ($item) {
+            return [
+                'product_name' => $item->product->name, // افترض أن لديك حقل name في نموذج Product
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+              
+            ];
+        });
+        return response()->json($result);
     }
 
 //الغاء الطلب
