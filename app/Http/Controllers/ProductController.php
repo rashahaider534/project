@@ -24,6 +24,7 @@ class ProductController extends Controller
             'name'=> 'nullable',
             'quantity'=>'nullable',
             'describtion'=>'nullable',
+            'price' =>'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
 
         ]);
@@ -38,6 +39,7 @@ class ProductController extends Controller
         $product->name=$validateData['name'];
         $product->quantity=$validateData['quantity'];
         $product->description=$validateData['describtion'];
+        $product->price=$validateData['price'];
         $product->store_id=$storeIndex;
         if ($filePath) {
             $product->image =$filePath;
