@@ -53,7 +53,9 @@ Route::post('orders/getProductsFromOrder', [OrderController::class, 'getProducts
 
 Route::middleware('auth:api')->get('orders/createOrder',[OrderController ::class, 'createOrder']);//انشاء طلب
 
-Route::post('orders/updatestatus',[OrderController ::class, 'updatestatus']);
+Route::middleware('auth:api')->get('orders/getOrderdriver',[OrderController ::class, 'getOrderdriver']);//ارجاع الطلبات التي تخص السائق
+
+Route::post('orders/updatestatus',[OrderController ::class, 'updatestatus']);//تحديث حالة الطلب من السائق
 
 Route::post('orders/cancel',[OrderController::class,'cancel']);//الغاء طلب
 //cart
